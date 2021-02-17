@@ -1,3 +1,26 @@
+/* * * * * * * * * * * * * *
+*           MAIN           *
+* * * * * * * * * * * * * */
+
+// init global variables & switches
+let myDataTable
+
+let promises = [
+    d3.csv("data/enable1.txt")
+]
+
+Promise.all(promises)
+    .then( function(data){ initMainPage(data) })
+    .catch( function (err){console.log(err)} );
+
+function initMainPage(dataArray) {
+
+    myDataTable = new DataTable("resultsDiv", dataArray[0])
+
+}
+
+// ****************
+
 const wordlist = ["COUNT", "ACCOUNT", "COCONUT"]
 
 wordlist.forEach(item => {
@@ -5,6 +28,14 @@ wordlist.forEach(item => {
 })
 
 const letters = ["U", "A", "C", "N", "O", "R", "T"]
+
+let found = []
+
+// TO DO:
+// -RUNNING SCORE
+// -INPUT WORDLIST
+// -LIST OF ALREADY-FOUND WORDS
+// -[ALREADY FOUND] ERROR
 
 // Function acting on submit
 document.getElementById("beeSubmit").addEventListener("click", function() {
@@ -48,5 +79,6 @@ function validate(string, letters) {
     // Otherwise, return score
     } else {
         alert("Nice! WORD SCORE: " + score(string))
+        found = found.push(string)
     }
 }
